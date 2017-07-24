@@ -1,0 +1,41 @@
+<p>This rule detects direct usage of HTML tags in Non view Layer. In Hybris only JSP should be responsible for html layout. </p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+public class HybrisOrderController {
+    HybrisOrderFacade orderFacade;
+
+    String nonCompliantMethod() {
+        return orderFacade.nonCompliantMethod();
+    }
+}
+
+
+public class HybrisOrderFacade {
+...
+    String nonCompliantMethod() {
+        return "<html><body></body></html>"; // Noncompliant {{Refactor Controller to nor use html tags directly and let view template define the tags}}
+    }
+...
+}
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+public class HybrisOrderController {
+    HybrisOrderFacade orderFacade;
+
+    String compliantMethod() {
+        OrderDTO orderDto = orderFacade.nonCompliantMethod();
+        return "index.jsp";
+    }
+}
+
+
+public class HybrisOrderFacade {
+...
+    String nonCompliantMethod() {
+        ...
+        return orderDto;
+    }
+...
+}
+</pre>

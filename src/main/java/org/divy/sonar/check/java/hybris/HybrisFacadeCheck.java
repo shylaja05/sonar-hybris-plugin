@@ -13,8 +13,6 @@ import java.util.Map;
 
 @Rule(key = "HybrisFacadeCheck")
 public class HybrisFacadeCheck extends IssuableSubscriptionVisitor {
-    private static final Logger LOGGER = LoggerFactory.getLogger(HybrisFacadeCheck.class);
-
     private Map<Tree.Kind, UsageCheckVisitor> usageChecks = new EnumMap<>(Tree.Kind.class);
 
     @Override

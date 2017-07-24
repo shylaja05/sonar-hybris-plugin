@@ -6,6 +6,8 @@
 # About Hybris Rules for SonarQube
 
 
+
+
 ## Purpose
 
 SonarQube is a leading tool to monitor code quality. This plugin helps monitor code issues for Hybris implementation

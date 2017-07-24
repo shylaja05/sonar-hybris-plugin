@@ -1,13 +1,11 @@
 package org.divy.sonar.check.java.hybris;
 
+import org.divy.sonar.check.java.generic.AbstractStringLiteralCheck;
 import org.sonar.check.Priority;
 import org.sonar.check.Rule;
-import org.sonar.plugins.java.api.IssuableSubscriptionVisitor;
-import org.sonar.plugins.java.api.tree.LiteralTree;
+import org.sonar.plugins.java.api.tree.ClassTree;
 import org.sonar.plugins.java.api.tree.Tree;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.regex.Pattern;
 
 @Rule(
@@ -17,23 +15,34 @@ import java.util.regex.Pattern;
         tags = {"hybris"},
         description = "Return view template names from controller and let view template render the layer instead of controller classes directly defining the layout"
 )
-public class HybrisControllerHtmlUsageCheck extends IssuableSubscriptionVisitor {
+public class HybrisControllerHtmlUsageCheck extends AbstractStringLiteralCheck {
+
+    private static final String SPRING_CONTROLLER_ANNOTATION = "org.springframework.stereotype.Controller";
+    private static final String SPRING_REST_CONTROLLER_ANNOTATION = "org.springframework.web.bind.annotation.RestController";
+
+    private static final Pattern TARGET_TYPE_NAME_MATCH = Pattern.compile("(.)*Controller$", Pattern.CASE_INSENSITIVE);
 
     private static final Pattern HTML_PATTERN = Pattern.compile("\"(</?(\\s*\"[^\"]*\"|'[^']*'|[^'\">])*>)+\"");
 
     @Override
-    public List<Tree.Kind> nodesToVisit() {
-        return Collections.singletonList(Tree.Kind.STRING_LITERAL);
+    protected boolean isTargetedType(ClassTree type) {
+        return isAnnotatedWith(type, SPRING_CONTROLLER_ANNOTATION)
+                || isAnnotatedWith(type, SPRING_REST_CONTROLLER_ANNOTATION)
+                || hasTargetedTypeName(type);
     }
 
     @Override
-    public void visitNode(Tree tree) {
-        if (tree.is(Tree.Kind.STRING_LITERAL) && isTag((LiteralTree) tree)) {
-            context.reportIssue(this, tree, "Refactor Controller to not use html tags directly and let view template define the tags");
+    protected boolean hasTargetedTypeName(ClassTree type) {
+        return TARGET_TYPE_NAME_MATCH.matcher(type.simpleName().name()).matches();
         }
+
+    @Override
+    protected String getMessage(Tree tree) {
+        return "Refactor Controller to nor use html tags directly and let view template define the tags";
     }
 
-    private boolean isTag(LiteralTree tree) {
-        return HTML_PATTERN.matcher(tree.value()).matches();
+    @Override
+    protected Pattern resolveRestrictedCompiledPattern() {
+        return HTML_PATTERN;
     }
 }

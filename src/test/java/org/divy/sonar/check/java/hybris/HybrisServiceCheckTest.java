@@ -1,5 +1,7 @@
 package org.divy.sonar.check.java.hybris;
 
+import org.divy.sonar.check.java.generic.GenericLayerUsageCheck;
+import org.divy.sonar.check.java.generic.GenericStringLiteralCheck;
 import org.junit.Test;
 import org.sonar.java.checks.verifier.JavaCheckVerifier;
 
@@ -7,7 +9,12 @@ public class HybrisServiceCheckTest {
 
   @Test
   public void checkHtmlUsage() {
-    JavaCheckVerifier.verify("src/test/files/MyCustomRule.java", new HybrisServiceCheck());
+    GenericStringLiteralCheck check = new GenericStringLiteralCheck();
+
+    check.setTargetTypeName("Service");
+    check.setTargetTypeNameMatch("(.)*(Service)$");
+
+    JavaCheckVerifier.verify("src/test/files/service/HtmlUsageTestSampleService.java", check);
   }
 
   @Test
@@ -22,11 +29,25 @@ public class HybrisServiceCheckTest {
 
   @Test
   public void checkSessionUsage() {
-    JavaCheckVerifier.verify("src/test/files/MyCustomRule.java", new HybrisServiceCheck());
+    GenericLayerUsageCheck check = new GenericLayerUsageCheck();
+
+    check.setRestrictedTypeName("SessionService");
+    check.setRestrictedTypeNameMatch ("(.)*(SessionService)$");
+    check.setTargetTypeName("Service");
+    check.setTargetTypeNameMatch("(.)*(Service)$");
+
+    JavaCheckVerifier.verify("src/test/files/service/HybrisSessionServiceUsageSampleService.java", check);
   }
 
   @Test
   public void checkFlexibleSearchUsage() {
-    JavaCheckVerifier.verify("src/test/files/MyCustomRule.java", new HybrisServiceCheck());
+    GenericLayerUsageCheck check = new GenericLayerUsageCheck();
+
+    check.setRestrictedTypeName("FlexibleSearchService");
+    check.setRestrictedTypeNameMatch ("(.)*(FlexibleSearchService)$");
+    check.setTargetTypeName("Service");
+    check.setTargetTypeNameMatch("(.)*(Service)$");
+
+    JavaCheckVerifier.verify("src/test/files/service/HybrisFlexibleSearchUsageSampleService.java", check);
   }
 }

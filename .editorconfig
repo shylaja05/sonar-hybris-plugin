@@ -1,0 +1,3 @@
+[src/{main,test}/java/**.java]
+indent_style = space
+indent_size = 4

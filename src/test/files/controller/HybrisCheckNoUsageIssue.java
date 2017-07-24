@@ -18,4 +18,9 @@ public class HybrisCheckNoUsageIssue {
         UserService localService; // Compliant
         ProductDao localMemberDao; // Compliant
     }
+
+    String compliantHtmlUsage() {
+        return "<html><body></body></html>"; // Compliant - This is not a Controller, Service, Dao or a Facade
+    }
+
 }

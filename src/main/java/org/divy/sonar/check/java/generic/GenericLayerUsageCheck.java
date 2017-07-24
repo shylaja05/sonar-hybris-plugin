@@ -24,11 +24,12 @@ public class GenericLayerUsageCheck extends AbstractLayerUsageCheck {
     @RuleProperty(description = "Pattern to match the Architecture layer where the check needs to be performed")
     String targetTypeNameMatch;
 
+    @RuleProperty(description = "Human readable name of Architecture layer where the check needs to be performed")
+    String targetTypeName;
+
     @RuleProperty(description = "Pattern to match restricted layer to be checked")
     String restrictedTypeNameMatch;
 
-    @RuleProperty(description = "Human readable name of Architecture layer where the check needs to be performed")
-    String targetTypeName;
 
     @RuleProperty(description = "Human readable name of restricted layer")
     String restrictedTypeName;
@@ -65,5 +66,21 @@ public class GenericLayerUsageCheck extends AbstractLayerUsageCheck {
             targetTypeNameMatchPattern = Pattern.compile(targetTypeNameMatch);
         }
         return targetTypeNameMatchPattern;
+    }
+
+    public void setTargetTypeNameMatch(String targetTypeNameMatch) {
+        this.targetTypeNameMatch = targetTypeNameMatch;
+    }
+
+    public void setRestrictedTypeNameMatch(String restrictedTypeNameMatch) {
+        this.restrictedTypeNameMatch = restrictedTypeNameMatch;
+    }
+
+    public void setTargetTypeName(String targetTypeName) {
+        this.targetTypeName = targetTypeName;
+    }
+
+    public void setRestrictedTypeName(String restrictedTypeName) {
+        this.restrictedTypeName = restrictedTypeName;
     }
 }

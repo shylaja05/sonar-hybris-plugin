@@ -30,8 +30,8 @@ public class HybrisControllerUsageCheck extends AbstractLayerUsageCheck {
 
     @Override
     protected boolean isTargetedType(ClassTree type) {
-    	return isAnnotatedWith(type, SPRING_CONTROLLER_ANNOTATION)
-    			|| isAnnotatedWith(type, SPRING_REST_CONTROLLER_ANNOTATION)
+        return isAnnotatedWith(type, SPRING_CONTROLLER_ANNOTATION)
+                || isAnnotatedWith(type, SPRING_REST_CONTROLLER_ANNOTATION)
                 || hasTargetedTypeName(type);
     }
 
@@ -39,6 +39,8 @@ public class HybrisControllerUsageCheck extends AbstractLayerUsageCheck {
     protected boolean hasTargetedTypeName(ClassTree type) {
         return TARGET_TYPE_NAME_MATCH.matcher(type.simpleName().name()).matches();
     }
+
+
 
     @Override
     protected boolean isRestricted(Tree tree) {

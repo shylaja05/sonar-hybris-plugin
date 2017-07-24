@@ -6,17 +6,17 @@ public clall HtmlUsageTestSampleController {
 	String nonCompliantMethod() {
         return "<html><body></body></html>"; // Noncompliant {{Refactor Controller to not use html tags directly and let view template define the tags}}
     }
-}    
+}
 </pre>
 <h2>Compliant Solution</h2>
-<pre>  
+<pre>
 @Controller
 public class HtmlUsageTestSampleController {
 ...
     String compliantMethod() {
         return "index.jsp";
     }
-...    
+...
 
 }
 </pre>
