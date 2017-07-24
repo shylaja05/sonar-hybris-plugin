@@ -7,21 +7,24 @@ import org.sonar.plugins.java.api.JavaFileScannerContext;
 import org.sonar.plugins.java.api.tree.*;
 
 public abstract class AbstractPublicGetterUsageCheck extends BaseTreeVisitor implements JavaFileScanner {
-	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-	protected JavaFileScannerContext context;
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected JavaFileScannerContext context;
 
-	@Override
+    @Override
     public void scanFile(JavaFileScannerContext context) {
         this.context = context;
         scan(context.getTree());
-    }	
-	
-	protected boolean isTargetedType(ClassTree type) {
+    }
+
+    protected boolean isTargetedType(ClassTree type) {
         return hasTargetedTypeName(type);
     }
-	
-	protected abstract boolean isPublicGetter(MethodTree tree);
-	protected abstract String getMessage(Tree tree);
-	protected abstract boolean hasTargetedTypeName(ClassTree type);
-	protected abstract boolean isRestricted(Tree tree);
+
+    protected abstract boolean isPublicGetter(MethodTree tree);
+
+    protected abstract String getMessage(Tree tree);
+
+    protected abstract boolean hasTargetedTypeName(ClassTree type);
+
+    protected abstract boolean isRestricted(Tree tree);
 }

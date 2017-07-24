@@ -4,8 +4,8 @@ import org.sonar.java.checks.verifier.JavaCheckVerifier; // Compliant
 
 @Facade
 public class PublicServiceGetterTestSample {
-	
-	void compliantMethodService() { // Compliant
-        return "valid"; 
+
+    void compliantMethodService() { // Compliant
+        return "valid";
     }
 }
