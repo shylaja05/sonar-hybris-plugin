@@ -29,7 +29,7 @@ public class HybrisControllerHtmlUsageCheck extends IssuableSubscriptionVisitor 
     @Override
     public void visitNode(Tree tree) {
         if (tree.is(Tree.Kind.STRING_LITERAL) && isTag((LiteralTree) tree)) {
-            context.reportIssue(this, tree, "Refactor Controller to nor use html tags directly and let view template define the tags");
+            context.reportIssue(this, tree, "Refactor Controller to not use html tags directly and let view template define the tags");
         }
     }
 

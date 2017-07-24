@@ -1,0 +1,20 @@
+<p>This rule detects direct usage of getter Services in Controller. In Hybris Controller should not call getter methods of Facade. </p>
+<h2>Noncompliant Code Example</h2>
+<pre>
+
+@Facade
+public class PublicServiceGetterTestSampleFacade {
+...
+    public String getProductService() { // Noncompliant {{Remove or make private all the public getter methods and properties that make Services available to Controllers}}
+        return "invalid"; 
+    }
+...
+}
+</pre>
+<h2>Compliant Solution</h2>
+<pre>
+@Facade
+private String getService() { // Compliant
+        return "valid";
+}
+</pre>
