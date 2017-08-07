@@ -5,7 +5,7 @@ import org.sonar.java.checks.verifier.JavaCheckVerifier; // Compliant
 @Facade
 public class PublicServiceGetterTestSampleFacade {
 
-    public String getProductService() { // Noncompliant {{Remove or make private all the public getter methods and properties that make Services available to Controllers}}
+    public productService getProductService() { // Noncompliant {{Remove or make private all the public getter methods and properties that make Services available to Controllers}}
         return "invalid";
     }
 
