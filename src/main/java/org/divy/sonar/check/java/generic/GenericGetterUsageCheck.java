@@ -68,8 +68,8 @@ public class GenericGetterUsageCheck extends BaseTreeVisitor implements JavaFile
         for (ModifierKeywordTree modifier : tree.modifiers().modifiers()) {
             if (modifier.modifier().equals(Modifier.PUBLIC)) {
                 String methodReturnType = tree.returnType().toString().toLowerCase();
-                String methodName = tree.simpleName().toString();
-                if (methodName.startsWith("get") && methodReturnType.endsWith("service")) {
+                String methodName = tree.simpleName().toString();                
+                if (methodName.startsWith("get") && (methodReturnType.endsWith("service") || methodReturnType.endsWith("dao"))) {
                     if (logger.isDebugEnabled()) {
                         logger.debug("Tree modifier name :" + modifier + "\n");
                         logger.debug("Method Name :" + methodName);

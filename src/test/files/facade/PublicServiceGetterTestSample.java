@@ -7,4 +7,8 @@ public class PublicServiceGetterTestSample {
     public String compliantMethodService() { // Compliant
         return "valid";
     }
+    
+    public String compliantMethodDao() { // Compliant
+        return "valid";
+    }
 }

@@ -5,26 +5,28 @@ import org.sonar.java.checks.verifier.JavaCheckVerifier;
 
 public class GenericGetterUsageCheckTest {
     GenericGetterUsageCheck check = new GenericGetterUsageCheck();
-    private static String restrictedTypeName = "Service";
-    private static String restrictedTypeNameMatch = "(.)*(Service|service)$";
+    private static String facadeRestrictedTypeName = "Service";
+    private static String facadeRestrictedTypeNameMatch = "(.)*(Service|service)$";
     private static String facadeTargetTypeName = "Facade";
     private static String facadeTypeNameMatch = "(.)*(Facade)$";
-    private static String daoTargetTypeName = "Dao";
-    private static String daoTypeNameMatch = "(.)*(Dao)$";
+    private static String serviceRestrictedTypeName = "Dao";
+    private static String serviceRestrictedTypeNameMatch = "(.)*(Dao|dao)$";
+    private static String serviceTargetTypeName = "Service";
+    private static String serviceTypeNameMatch = "(.)*(Service)$";
 
     @Test
     public void checkFacadeNoIssue() {
-        check.restrictedTypeName = restrictedTypeName;
-        check.restrictedTypeNameMatch = restrictedTypeNameMatch;
+        check.restrictedTypeName = facadeRestrictedTypeName;
+        check.restrictedTypeNameMatch = facadeRestrictedTypeNameMatch;
         check.targetTypeName = facadeTargetTypeName;
         check.targetTypeNameMatch = facadeTypeNameMatch;
         JavaCheckVerifier.verifyNoIssue("src/test/files/facade/PublicServiceGetterTestSample.java", check);
-    }
+     }
 
     @Test
     public void detectedFacade() {
-        check.restrictedTypeName = restrictedTypeName;
-        check.restrictedTypeNameMatch = restrictedTypeNameMatch;
+        check.restrictedTypeName = facadeRestrictedTypeName;
+        check.restrictedTypeNameMatch = facadeRestrictedTypeNameMatch;
         check.targetTypeName = facadeTargetTypeName;
         check.targetTypeNameMatch = facadeTypeNameMatch;
         JavaCheckVerifier.verify("src/test/files/facade/PublicServiceGetterTestSampleFacade.java", check);
@@ -32,19 +34,19 @@ public class GenericGetterUsageCheckTest {
     
     @Test
     public void checkDaoNoIssue() {
-        check.restrictedTypeName = restrictedTypeName;
-        check.restrictedTypeNameMatch = restrictedTypeNameMatch;
-        check.targetTypeName = daoTargetTypeName;
-        check.targetTypeNameMatch = daoTypeNameMatch;
+        check.restrictedTypeName = serviceRestrictedTypeName;
+        check.restrictedTypeNameMatch = serviceRestrictedTypeNameMatch;
+        check.targetTypeName = serviceTargetTypeName;
+        check.targetTypeNameMatch = serviceTypeNameMatch;
         JavaCheckVerifier.verifyNoIssue("src/test/files/facade/PublicServiceGetterTestSample.java", check);
     }
 
     @Test
     public void detectedDao() {
-        check.restrictedTypeName = restrictedTypeName;
-        check.restrictedTypeNameMatch = restrictedTypeNameMatch;
-        check.targetTypeName = daoTargetTypeName;
-        check.targetTypeNameMatch = daoTypeNameMatch;
-        JavaCheckVerifier.verify("src/test/files/Dao/PublicServiceGetterTestSampleDao.java", check);
+        check.restrictedTypeName = serviceRestrictedTypeName;
+        check.restrictedTypeNameMatch = serviceRestrictedTypeNameMatch;
+        check.targetTypeName = serviceTargetTypeName;
+        check.targetTypeNameMatch = serviceTypeNameMatch;
+        JavaCheckVerifier.verify("src/test/files/service/PublicServiceGetterTestSampleService.java", check);
     }
 }

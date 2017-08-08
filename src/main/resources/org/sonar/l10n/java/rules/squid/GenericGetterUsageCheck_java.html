@@ -12,9 +12,9 @@ public class PublicServiceGetterTestSampleFacade {
 </pre>
 <pre>
 
-public class PublicServiceGetterTestSampleDao {
+public class PublicServiceGetterTestSampleService {
 ...
-    public productService getProductService() { // Noncompliant {{Remove or make private all the public getter methods and properties in Dao that make Service available to Controllers}}
+    public productService getProductDao() { // Noncompliant {{Remove or make private all the public getter methods and properties in Service that make Dao available to Controllers}}
         return "invalid"; 
     }
 ...
