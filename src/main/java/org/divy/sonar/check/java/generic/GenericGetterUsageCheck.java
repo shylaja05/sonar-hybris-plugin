@@ -17,13 +17,16 @@ import org.sonar.squidbridge.annotations.RuleTemplate;
 
 import java.util.regex.Pattern;
 
-@Rule(key = "GenericGetterUsageCheck", priority = Priority.MINOR, name = "Make all getter as Private methods", tags = {
-        "hybris" }, description = "Remove or make private all the public getter methods and properties that make Services available to Controllers")
+@Rule(key = "GenericGetterUsageCheck", 
+      priority = Priority.MINOR, 
+      name = "Make all getter as Private methods", 
+      tags = {"hybris" }, 
+      description = "Remove or make private all the public getter methods and properties that make Services available to Controllers")
 @RuleTemplate
 public class GenericGetterUsageCheck extends BaseTreeVisitor implements JavaFileScanner {
 
-    private static final String MESSAGE = "Remove or make private all the public getter methods and properties that make Services available to Controllers";
-
+    private static final String MESSAGE = "Remove or make private all the public getter methods and properties in %1$s that make %2$s available to Controllers";
+    
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected JavaFileScannerContext context;
@@ -56,7 +59,7 @@ public class GenericGetterUsageCheck extends BaseTreeVisitor implements JavaFile
     @Override
     public void visitMethod(MethodTree tree) {
         if (isPublicGetterForRestrictedType(tree)) {
-            context.reportIssue(this, tree, getMessage(tree));
+            context.reportIssue(this, tree, getMessage());
         }
         super.visitMethod(tree);
     }
@@ -84,7 +87,7 @@ public class GenericGetterUsageCheck extends BaseTreeVisitor implements JavaFile
         return resolveRestrictedTypeNameMatchPattern().matcher(typeName).matches();
     }
 
-    protected String getMessage(Tree tree) {
+    protected String getMessage() {
         return String.format(MESSAGE, targetTypeName, restrictedTypeName);
     }
 

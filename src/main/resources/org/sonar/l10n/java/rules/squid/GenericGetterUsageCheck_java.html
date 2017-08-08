@@ -2,10 +2,19 @@
 <h2>Noncompliant Code Example</h2>
 <pre>
 
-@Facade
 public class PublicServiceGetterTestSampleFacade {
 ...
-    public String getProductService() { // Noncompliant {{Remove or make private all the public getter methods and properties that make Services available to Controllers}}
+    public productService getProductService() { // Noncompliant {{Remove or make private all the public getter methods and properties in Facade that make Service available to Controllers}}
+        return "invalid"; 
+    }
+...
+}
+</pre>
+<pre>
+
+public class PublicServiceGetterTestSampleDao {
+...
+    public productService getProductService() { // Noncompliant {{Remove or make private all the public getter methods and properties in Dao that make Service available to Controllers}}
         return "invalid"; 
     }
 ...
